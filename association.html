@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Association — Je m'engage · O'touch · Elsa Pinceau</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--warm:#F5EFE6;--deep:#2C1810;--terracotta:#C4622D;--terra-l:#D4733E;--sage:#4A6741;--sage-l:#5A7A50;--gold:#C9934A;--white:#FFFFFF;--text:#2C2416;--muted:#6B5B4E;--light:#9A8B80;--border:rgba(196,98,45,.15)}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;font-weight:300;color:var(--text);background:var(--warm);overflow-x:hidden}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 5vw;height:72px;background:rgba(245,239,230,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:box-shadow .3s}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-text{font-family:'Cormorant Garamond',serif;font-size:22px;font-style:italic;font-weight:400;color:var(--terracotta);letter-spacing:-.3px}
+.logo-sub{font-size:9px;font-weight:500;letter-spacing:3px;color:var(--sage);display:block;margin-top:-4px}
+.nav-links{display:flex;gap:36px;list-style:none}
+.nav-links a{text-decoration:none;font-size:13px;font-weight:300;letter-spacing:.5px;color:var(--muted);transition:color .2s}
+.nav-links a:hover{color:var(--terracotta)}
+.nav-links a.active{color:var(--terracotta);font-weight:400}
+.nav-back{font-size:12px !important;display:inline-flex;align-items:center;gap:4px}
+.nav-cta{background:var(--sage) !important;color:white !important;padding:10px 22px;border-radius:40px;font-size:12px !important;font-weight:400 !important;letter-spacing:.8px !important}
+.nav-cta:hover{background:var(--sage-l) !important;color:white !important}
+
+/* HERO */
+.asso-hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:0;overflow:hidden}
+.asso-hero-img{height:100vh;overflow:hidden;position:relative}
+.asso-hero-img img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;filter:brightness(.9) saturate(.85)}
+.asso-hero-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,transparent 60%,var(--warm) 100%)}
+.asso-hero-text{padding:140px 60px 80px 60px}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(196,98,45,.1);color:var(--terracotta);font-size:10px;font-weight:500;letter-spacing:3px;text-transform:uppercase;padding:8px 16px;border-radius:20px;margin-bottom:32px;border:1px solid rgba(196,98,45,.2)}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(40px,5vw,62px);font-weight:300;line-height:1.08;color:var(--deep);letter-spacing:-1px;margin-bottom:24px}
+.hero-title em{font-style:italic;color:var(--terracotta)}
+.hero-sub{font-size:16px;font-weight:300;color:var(--muted);line-height:1.85;margin-bottom:40px;max-width:440px}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap}
+.btn-terra{background:var(--terracotta);color:white;padding:15px 36px;border-radius:50px;font-size:13px;font-weight:400;letter-spacing:.8px;text-decoration:none;transition:all .25s;display:inline-block}
+.btn-terra:hover{background:var(--terra-l);transform:translateY(-1px)}
+.btn-sage-o{border:1px solid rgba(74,103,65,.3);color:var(--sage);padding:15px 36px;border-radius:50px;font-size:13px;font-weight:400;letter-spacing:.8px;text-decoration:none;transition:all .25s;display:inline-block}
+.btn-sage-o:hover{background:var(--sage);color:white}
+
+/* STATS */
+.stats-strip{background:var(--terracotta);padding:48px 5vw;display:flex;justify-content:center;gap:0}
+.stat{text-align:center;padding:0 48px;border-right:1px solid rgba(255,255,255,.2)}
+.stat:last-child{border:none}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;color:white;line-height:1}
+.stat-lbl{font-size:11px;font-weight:400;letter-spacing:2px;color:rgba(255,255,255,.65);text-transform:uppercase;margin-top:6px}
+
+/* MANIFESTE */
+#manifeste{padding:120px 5vw;background:var(--white)}
+.manifeste-inner{display:grid;grid-template-columns:1fr 2fr;gap:80px;max-width:1100px;margin:0 auto;align-items:start}
+.manifeste-label{font-size:10px;font-weight:500;letter-spacing:4px;color:var(--terracotta);text-transform:uppercase;margin-bottom:16px;display:block}
+.manifeste-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,48px);font-weight:300;line-height:1.1;color:var(--deep);letter-spacing:-1px}
+.manifeste-title em{font-style:italic;color:var(--terracotta)}
+.manifeste-quote{font-family:'Cormorant Garamond',serif;font-size:22px;font-style:italic;font-weight:300;color:var(--terracotta);line-height:1.6;padding-left:24px;border-left:3px solid var(--terracotta);margin-bottom:28px}
+.manifeste-body p{font-size:16px;font-weight:300;color:var(--muted);line-height:1.9;margin-bottom:20px}
+
+/* ACTIONS */
+#actions{padding:120px 5vw;background:var(--warm)}
+.actions-hd{text-align:center;max-width:560px;margin:0 auto 72px}
+.actions-hd-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,48px);font-weight:300;line-height:1.1;color:var(--deep);letter-spacing:-1px;margin-bottom:16px}
+.actions-hd-title em{font-style:italic;color:var(--terracotta)}
+.actions-hd-sub{font-size:15px;font-weight:300;color:var(--muted);line-height:1.8}
+.actions-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;max-width:900px;margin:0 auto}
+.action-card{background:var(--white);border-radius:20px;padding:36px;border:1px solid var(--border);transition:transform .3s,box-shadow .3s}
+.action-card:hover{transform:translateY(-3px);box-shadow:0 16px 48px rgba(196,98,45,.1)}
+.action-ico{font-size:32px;margin-bottom:16px;display:block}
+.action-name{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;color:var(--deep);margin-bottom:10px}
+.action-desc{font-size:14px;font-weight:300;color:var(--muted);line-height:1.75}
+.action-tag{display:inline-block;margin-top:16px;font-size:10px;font-weight:500;letter-spacing:1.5px;color:var(--terracotta);text-transform:uppercase;border-bottom:1px solid rgba(196,98,45,.3);padding-bottom:2px}
+
+/* JOURNAL */
+#journal{padding:120px 5vw;background:var(--white)}
+.journal-hd{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:56px}
+.journal-hd-left span{font-size:10px;font-weight:500;letter-spacing:4px;color:var(--terracotta);text-transform:uppercase;display:block;margin-bottom:12px}
+.journal-hd-left h2{font-family:'Cormorant Garamond',serif;font-size:clamp(30px,4vw,44px);font-weight:300;color:var(--deep);letter-spacing:-1px}
+.journal-hd-left h2 em{font-style:italic;color:var(--terracotta)}
+.journal-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.jpost{background:var(--warm);border-radius:16px;overflow:hidden;border:1px solid var(--border);transition:transform .3s,box-shadow .3s;cursor:pointer}
+.jpost:hover{transform:translateY(-4px);box-shadow:0 20px 48px rgba(196,98,45,.12)}
+.jpost-img{height:200px;background:linear-gradient(135deg,rgba(196,98,45,.15),rgba(74,103,65,.15));display:flex;align-items:center;justify-content:center;color:var(--light);font-size:12px;letter-spacing:1px;position:relative;overflow:hidden}
+.jpost-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.jpost:hover .jpost-img img{transform:scale(1.04)}
+.jpost-tag{position:absolute;top:14px;left:14px;background:var(--terracotta);color:white;font-size:9px;font-weight:500;letter-spacing:2px;padding:4px 10px;border-radius:12px;text-transform:uppercase;z-index:2}
+.jpost-body{padding:24px}
+.jpost-date{font-size:11px;color:var(--light);letter-spacing:1px;margin-bottom:8px}
+.jpost-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;color:var(--deep);margin-bottom:10px;line-height:1.3}
+.jpost-excerpt{font-size:13px;font-weight:300;color:var(--muted);line-height:1.7}
+.jpost-more{display:inline-flex;align-items:center;gap:6px;margin-top:14px;font-size:12px;color:var(--terracotta);font-weight:400;letter-spacing:.5px}
+.jpost-more-arrow{transition:transform .2s}
+.jpost:hover .jpost-more-arrow{transform:translateX(4px)}
+
+/* EVENTS */
+#evenements{padding:80px 5vw;background:var(--terracotta)}
+.ev-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,40px);font-weight:300;color:white;text-align:center;margin-bottom:48px;letter-spacing:-.5px}
+.ev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:900px;margin:0 auto}
+.ev-card{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:16px;padding:28px;transition:background .2s}
+.ev-card:hover{background:rgba(255,255,255,.15)}
+.ev-date{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:300;color:white;line-height:1}
+.ev-month{font-size:11px;font-weight:500;letter-spacing:2px;color:rgba(255,255,255,.5);text-transform:uppercase;margin-bottom:16px}
+.ev-name{font-size:15px;font-weight:400;color:white;margin-bottom:6px}
+.ev-detail{font-size:12px;font-weight:300;color:rgba(255,255,255,.55);line-height:1.6}
+.ev-empty{text-align:center;color:rgba(255,255,255,.4);font-size:14px;padding:40px}
+
+/* FOOTER */
+footer{background:var(--deep);padding:48px 5vw;display:flex;justify-content:space-between;align-items:center}
+.ft-logo{font-family:'Cormorant Garamond',serif;font-size:22px;font-style:italic;color:rgba(255,255,255,.7)}
+.ft-legal{font-size:11px;color:rgba(255,255,255,.3);text-align:center;line-height:1.8}
+.ft-links a{font-size:12px;color:rgba(255,255,255,.3);text-decoration:none;margin-left:20px;transition:color .2s}
+.ft-links a:hover{color:rgba(255,255,255,.7)}
+
+/* WA FLOAT */
+.wa-float{position:fixed;bottom:32px;right:32px;z-index:200;width:56px;height:56px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;text-decoration:none;box-shadow:0 4px 20px rgba(37,211,102,.4);transition:transform .25s}
+.wa-float:hover{transform:scale(1.08)}
+.wa-float svg{width:28px;height:28px}
+
+/* ─── ARTICLE FULL MODAL ─── */
+.article-modal-ov{display:none;position:fixed;inset:0;background:rgba(44,24,16,.7);z-index:400;align-items:flex-start;justify-content:center;backdrop-filter:blur(10px);overflow-y:auto;padding:40px 20px}
+.article-modal-ov.open{display:flex}
+.article-modal-inner{background:var(--white);border-radius:28px;max-width:700px;width:100%;margin:auto;position:relative;overflow:hidden;animation:fadeUp .35s ease both}
+.article-modal-hero{width:100%;height:320px;object-fit:cover;display:block}
+.article-modal-hero-placeholder{width:100%;height:240px;background:linear-gradient(135deg,rgba(196,98,45,.15),rgba(74,103,65,.15));display:flex;align-items:center;justify-content:center;font-size:48px}
+.article-modal-body{padding:44px 48px 52px}
+.article-modal-meta{display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+.article-modal-tag{background:var(--terracotta);color:white;font-size:9px;font-weight:500;letter-spacing:2px;padding:5px 12px;border-radius:12px;text-transform:uppercase}
+.article-modal-date{font-size:12px;color:var(--light);letter-spacing:.5px}
+.article-modal-title{font-family:'Cormorant Garamond',serif;font-size:clamp(26px,4vw,38px);font-weight:300;line-height:1.15;color:var(--deep);letter-spacing:-1px;margin-bottom:24px}
+.article-modal-text{font-size:16px;font-weight:300;color:var(--muted);line-height:2}
+.article-modal-text p{margin-bottom:22px}
+.article-modal-text p:first-child{font-size:17px;color:var(--text);font-weight:300}
+.article-modal-text p:last-child{margin-bottom:0}
+.article-modal-close{position:absolute;top:20px;right:20px;width:40px;height:40px;border-radius:50%;background:rgba(44,24,16,.5);border:none;cursor:pointer;font-size:16px;color:white;display:flex;align-items:center;justify-content:center;transition:background .2s;z-index:10;backdrop-filter:blur(4px)}
+.article-modal-close:hover{background:rgba(44,24,16,.8)}
+.article-modal-footer{border-top:1px solid var(--border);margin-top:40px;padding-top:24px;display:flex;justify-content:space-between;align-items:center}
+.article-modal-author{font-size:13px;color:var(--muted);font-style:italic}
+.article-modal-author strong{color:var(--terracotta);font-style:normal;font-weight:400}
+.article-modal-share{font-size:12px;color:var(--terracotta);text-decoration:none;display:flex;align-items:center;gap:6px}
+.article-modal-share:hover{text-decoration:underline}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+@media(max-width:768px){
+  .asso-hero{grid-template-columns:1fr}
+  .asso-hero-img{height:50vh}
+  .asso-hero-text{padding:40px 20px 60px}
+  .stats-strip{flex-direction:column;gap:32px}
+  .stat{border:none;padding:0}
+  section{padding:80px 20px !important}
+  .manifeste-inner{grid-template-columns:1fr;gap:40px}
+  .actions-grid{grid-template-columns:1fr}
+  .journal-grid{grid-template-columns:1fr}
+  .journal-hd{flex-direction:column;gap:20px;align-items:flex-start}
+  .ev-grid{grid-template-columns:1fr}
+  footer{flex-direction:column;gap:16px;text-align:center}
+  .ft-links{display:flex;gap:16px;justify-content:center}
+  .ft-links a{margin-left:0}
+  .nav-links{display:none}
+  .asso-hero-img::after{background:linear-gradient(to bottom,transparent 60%,var(--warm) 100%)}
+  .article-modal-body{padding:28px 24px 36px}
+  .article-modal-ov{padding:20px 12px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div><span class="logo-text">O'touch</span><span class="logo-sub">Association</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="nav-back">← Accueil</a></li>
+    <li><a href="galerie.html">Galerie d'Art</a></li>
+    <li><a href="association.html" class="active">Association</a></li>
+    <li><a href="index.html#booking" class="nav-cta">Réserver un massage</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="asso-hero">
+  <div class="asso-hero-img">
+    <img src="./elsa-hero.jpg" alt="Elsa Pinceau — Massothérapeute engagée" style="object-position:center 15%">
+  </div>
+  <div class="asso-hero-text">
+    <span class="hero-badge">✦ Association O'touch</span>
+    <h1 class="hero-title">Le toucher comme<br><em>acte d'amour</em><br>et de solidarité</h1>
+    <p class="hero-sub">Je mets mon art du massage au service des personnes isolées, âgées ou fragilisées en Martinique. Parce que tout être mérite d'être touché avec bienveillance.</p>
+    <div class="hero-actions">
+      <a href="#manifeste" class="btn-terra">Notre manifeste</a>
+      <a href="#journal" class="btn-sage-o">Lire le journal</a>
+    </div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-strip">
+  <div class="stat"><div class="stat-num">+120</div><div class="stat-lbl">Personnes aidées</div></div>
+  <div class="stat"><div class="stat-num">18</div><div class="stat-lbl">Interventions</div></div>
+  <div class="stat"><div class="stat-num">3</div><div class="stat-lbl">Années d'action</div></div>
+  <div class="stat"><div class="stat-num">∞</div><div class="stat-lbl">Générosité</div></div>
+</div>
+
+<!-- MANIFESTE -->
+<section id="manifeste">
+  <div class="manifeste-inner">
+    <div>
+      <span class="manifeste-label">Notre raison d'être</span>
+      <h2 class="manifeste-title">Un <em>geste</em> qui<br>change tout</h2>
+    </div>
+    <div class="manifeste-body">
+      <p class="manifeste-quote">« Le toucher est le premier langage. Avant les mots, avant les regards — les mains parlent. »</p>
+      <p>L'association O'touch est née d'une conviction profonde : le toucher bienveillant est un soin fondamental, pas un luxe. En Martinique comme partout ailleurs, des milliers de personnes traversent la vie sans jamais ressentir la chaleur d'une main qui prend soin.</p>
+      <p>Personnes âgées isolées, aidants familiaux épuisés, patients en souffrance chronique — je vais à leur rencontre, dans les EHPAD, les associations, les foyers, pour offrir ce que personne ne devrait se voir refuser : un moment de présence incarnée, de douceur réelle.</p>
+      <p>O'touch, c'est aussi former. Transmettre le geste juste aux aidants, aux familles, aux soignants. Parce que les mains éduquées sont des mains qui guérissent.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ACTIONS -->
+<section id="actions">
+  <div class="actions-hd">
+    <h2 class="actions-hd-title">Nos <em>engagements</em><br>sur le terrain</h2>
+    <p class="actions-hd-sub">Quatre piliers d'action pour un impact réel et durable auprès des personnes les plus vulnérables.</p>
+  </div>
+  <div class="actions-grid">
+    <div class="action-card">
+      <span class="action-ico">🤲</span>
+      <h3 class="action-name">Soins offerts</h3>
+      <p class="action-desc">Je propose des séances de massage gratuites aux personnes âgées en institution, aux malades chroniques et aux personnes en grande précarité sociale.</p>
+      <span class="action-tag">Bénévolat direct</span>
+    </div>
+    <div class="action-card">
+      <span class="action-ico">📚</span>
+      <h3 class="action-name">Formation des aidants</h3>
+      <p class="action-desc">J'anime des ateliers de toucher bienveillant pour les aidants familiaux et professionnels, leur donnant les outils pour soulager leurs proches au quotidien.</p>
+      <span class="action-tag">Transmission</span>
+    </div>
+    <div class="action-card">
+      <span class="action-ico">🌿</span>
+      <h3 class="action-name">Retraites solidaires</h3>
+      <p class="action-desc">J'organise des journées de ressourcement pour des groupes de personnes isolées — un espace de soin, de partage et de reconnexion à soi et aux autres.</p>
+      <span class="action-tag">Collectif</span>
+    </div>
+    <div class="action-card">
+      <span class="action-ico">💛</span>
+      <h3 class="action-name">Sensibilisation</h3>
+      <p class="action-desc">Je porte la parole sur la carence affective et tactile, ses conséquences sur la santé, et la nécessité d'intégrer le toucher dans les parcours de soin.</p>
+      <span class="action-tag">Plaidoyer</span>
+    </div>
+  </div>
+</section>
+
+<!-- JOURNAL -->
+<section id="journal">
+  <div class="journal-hd">
+    <div class="journal-hd-left">
+      <span>Mon journal solidaire</span>
+      <h2>Mes <em>moments</em> partagés</h2>
+    </div>
+  </div>
+  <div class="journal-grid" id="journal-grid">
+    <!-- Dynamically rendered from localStorage -->
+  </div>
+  <div id="journal-more-wrap" style="text-align:center;margin-top:48px;display:none">
+    <button id="journal-more-btn" onclick="loadMoreArticles()" style="background:transparent;border:1px solid rgba(196,98,45,.35);color:var(--terracotta);padding:14px 40px;border-radius:50px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:400;letter-spacing:1px;cursor:pointer;transition:all .25s" onmouseover="this.style.background='var(--terracotta)';this.style.color='white'" onmouseout="this.style.background='transparent';this.style.color='var(--terracotta)'">
+      ✦ Charger plus d'articles &nbsp;<span id="journal-more-count" style="opacity:.6;font-size:11px"></span>
+    </button>
+  </div>
+</section>
+
+<!-- EVENEMENTS -->
+<section id="evenements" style="padding:80px 5vw">
+  <h2 class="ev-title">Mes prochains <em style="font-style:italic">événements</em></h2>
+  <div class="ev-grid" id="events-grid">
+    <!-- Dynamically rendered from localStorage -->
+  </div>
+  <p style="text-align:center;margin-top:40px;font-size:13px;color:rgba(255,255,255,.6);font-weight:300">Pour participer ou me soutenir : <a href="https://wa.me/596696804747" style="color:white;font-weight:400">06 96 80 47 47</a></p>
+</section>
+
+<footer>
+  <div class="ft-logo">O'touch</div>
+  <div class="ft-legal">© 2025 O'touch Association · Elsa Pinceau · Martinique<br>Fait avec ❤️ et engagement</div>
+  <div class="ft-links">
+    <a href="index.html">Accueil</a>
+    <a href="galerie.html">Galerie</a>
+  </div>
+</footer>
+
+<a href="https://wa.me/596696804747" class="wa-float" target="_blank" aria-label="WhatsApp Elsa">
+  <svg viewBox="0 0 32 32" fill="white"><path d="M16 3C8.832 3 3 8.832 3 16c0 2.387.638 4.624 1.748 6.562L3 29l6.612-1.727A12.93 12.93 0 0016 29c7.168 0 13-5.832 13-13S23.168 3 16 3zm0 2c6.086 0 11 4.914 11 11s-4.914 11-11 11a10.93 10.93 0 01-5.461-1.461l-.37-.219-3.925 1.025 1.05-3.836-.238-.385A10.93 10.93 0 015 16c0-6.086 4.914-11 11-11zm-4.094 5.5c-.29.32-1.105 1.082-1.105 2.637s1.131 3.063 1.289 3.27c.16.207 2.195 3.527 5.41 4.8 1.338.515 2.157.558 2.773.474.605-.086 1.864-.766 2.129-1.504.265-.738.265-1.371.184-1.504-.078-.133-.289-.211-.605-.371-.317-.16-1.868-.926-2.157-1.031-.289-.106-.5-.16-.711.16-.211.32-.817 1.031-1.002 1.242-.184.211-.37.237-.684.078-1.067-.492-2.535-1.567-2.436-2.354.099 0-.019-.49.139-.648.141-.142.316-.371.476-.555.157-.184.21-.317.316-.528.105-.211.052-.396-.027-.555-.079-.16-.711-1.715-.973-2.348-.254-.613-.516-.53-.712-.539l-.606-.012c-.21 0-.553.079-.844.387z"/></svg>
+</a>
+
+<!-- ─── ARTICLE READING MODAL ─── -->
+<div class="article-modal-ov" id="article-read-modal">
+  <!-- Reading progress bar -->
+  <div id="reading-progress-bar" style="position:fixed;top:0;left:0;height:3px;width:0%;background:var(--terracotta);z-index:500;transition:width .1s linear;border-radius:0 2px 2px 0"></div>
+  <div class="article-modal-inner">
+    <button class="article-modal-close" onclick="closeArticleModal()">✕</button>
+    <div id="modal-hero-wrap"></div>
+    <div class="article-modal-body">
+      <div class="article-modal-meta">
+        <span class="article-modal-tag" id="modal-tag">Terrain</span>
+        <span class="article-modal-date" id="modal-date"></span>
+        <span id="modal-reading-time" style="font-size:11px;color:var(--light);letter-spacing:.5px;margin-left:auto"></span>
+      </div>
+      <h2 class="article-modal-title" id="modal-title"></h2>
+      <div class="article-modal-text" id="modal-text"></div>
+      <div class="article-modal-footer">
+        <span class="article-modal-author">Par <strong>Elsa Pinceau</strong> · O'touch Association</span>
+        <a href="https://wa.me/596696804747" target="_blank" class="article-modal-share">💬 Réagir sur WhatsApp →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── STORAGE KEYS ───
+const KEY_ARTICLES = 'otouch_articles';
+const KEY_EVENTS   = 'otouch_events';
+
+// ─── PAGINATION STATE ───
+const ARTICLES_PER_PAGE = 4;
+let currentPage = 1;
+let allArticles  = [];
+
+// ─── DEFAULT DATA (fallback si localStorage vide) ───
+const DEFAULT_ARTICLES = [
+  { id:'a1', title:'Journée au EHPAD de Le Lamentin', text:"J'ai offert des massages aux résidents — un moment de grâce partagé. La joie dans leurs yeux est ma plus belle récompense. Chaque toucher est une conversation silencieuse, un lien qui transcende les mots.\n\nNous avons passé une matinée ensemble, dans la salle commune. Certains residents me tendaient la main avant même que je ne m'approche. Une dame de 89 ans m'a dit : « On ne me touche jamais ici. » Ces mots me hanteront longtemps.", tag:'Terrain', date:'2025-03-15', image:'' },
+  { id:'a2', title:"J'ai formé des aidants familiaux", text:"J'ai animé un atelier de toucher bienveillant pour des aidants familiaux. Je les ai vus découvrir comment soulager leurs proches — et se soulager eux-mêmes. Une expérience bouleversante.\n\nIls sont venus, souvent épuisés, parfois en larmes. Certains s'occupent de leurs parents depuis des années sans jamais avoir reçu de guidance sur le toucher. En deux heures, quelque chose s'est ouvert.", tag:'Formation', date:'2025-02-10', image:'' },
+  { id:'a3', title:'Fibromyalgie & résilience', text:"J'ai proposé un soin offert à une personne atteinte de fibromyalgie. Ce que le corps endure en silence mérite toute notre attention. Le toucher devient alors un acte de reconnaissance profonde.\n\nSon corps était une carte de douleurs. Mais son regard, au fil des minutes, s'est apaisé. La fibromyalgie est encore trop méconnue — j'espère, par ce geste, contribuer à la visibiliser.", tag:'Soin offert', date:'2025-01-20', image:'' },
+  { id:'a4', title:'Retraite bien-être, Sainte-Anne', text:"J'ai organisé une retraite bien-être au bord de mer. J'y ai réuni des personnes isolées pour une journée de soins et de partage. Un rêve devenu réalité, porté par la générosité de chacun.\n\nDix personnes. Une journée. La mer en fond sonore. Des soins, de la musique, des repas partagés. Certains n'avaient pas quitté leur commune depuis des mois. Ce genre de journée recharge les âmes.", tag:'Retraite', date:'2024-12-05', image:'' }
+];
+const DEFAULT_EVENTS = [
+  { id:'e1', name:'Journée portes ouvertes — EHPAD Fort-de-France', detail:'Je participe et propose des soins gratuits aux résidents et leurs familles.', date:'2025-04-12', lieu:'Fort-de-France' },
+  { id:'e2', name:'Atelier aidants — Le Lamentin', detail:"J'anime un atelier de toucher bienveillant. Inscriptions via WhatsApp.", date:'2025-05-24', lieu:'Le Lamentin' },
+  { id:'e3', name:'Retraite solidaire — Sainte-Anne', detail:"Je vous invite à une journée de soins et de partage au bord de mer. Places limitées.", date:'2025-06-07', lieu:'Sainte-Anne' }
+];
+
+// ─── HELPERS ───
+function fmtDateLong(dateStr) {
+  if (!dateStr) return '';
+  const d = new Date(dateStr + 'T12:00:00');
+  return d.toLocaleDateString('fr-FR', { day:'numeric', month:'long', year:'numeric' });
+}
+function fmtMonth(dateStr) {
+  if (!dateStr) return '';
+  const d = new Date(dateStr + 'T12:00:00');
+  return d.toLocaleDateString('fr-FR', { month:'long', year:'numeric' });
+}
+function getDay(dateStr) {
+  if (!dateStr) return '';
+  return String(new Date(dateStr + 'T12:00:00').getDate()).padStart(2,'0');
+}
+function getMonthShort(dateStr) {
+  if (!dateStr) return '';
+  const d = new Date(dateStr + 'T12:00:00');
+  return d.toLocaleDateString('fr-FR', { month:'short', year:'numeric' });
+}
+
+// ─── RENDER JOURNAL (avec pagination) ───
+function renderJournal() {
+  const raw = localStorage.getItem(KEY_ARTICLES);
+  allArticles = raw ? JSON.parse(raw) : DEFAULT_ARTICLES;
+  currentPage = 1;
+  const grid = document.getElementById('journal-grid');
+  if (!allArticles.length) {
+    grid.innerHTML = '<p style="color:var(--light);font-size:14px;text-align:center;padding:40px 0;grid-column:1/-1">Aucun article publié pour le moment.</p>';
+    return;
+  }
+  grid.innerHTML = '';
+  renderArticlePage(1);
+  updateMoreButton();
+}
+
+function renderArticlePage(page) {
+  const grid = document.getElementById('journal-grid');
+  const start = 0;
+  const end = page * ARTICLES_PER_PAGE;
+  const visible = allArticles.slice(start, end);
+  grid.innerHTML = visible.map(a => buildArticleCard(a)).join('');
+}
+
+function loadMoreArticles() {
+  currentPage++;
+  renderArticlePage(currentPage);
+  updateMoreButton();
+  // Smooth scroll to newly revealed cards
+  const grid = document.getElementById('journal-grid');
+  const cards = grid.querySelectorAll('.jpost');
+  const firstNew = cards[(currentPage - 1) * ARTICLES_PER_PAGE];
+  if (firstNew) firstNew.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function updateMoreButton() {
+  const wrap = document.getElementById('journal-more-wrap');
+  const countEl = document.getElementById('journal-more-count');
+  const shown = Math.min(currentPage * ARTICLES_PER_PAGE, allArticles.length);
+  const remaining = allArticles.length - shown;
+  if (allArticles.length > ARTICLES_PER_PAGE) {
+    wrap.style.display = 'block';
+    if (remaining <= 0) {
+      wrap.style.display = 'none';
+    } else {
+      countEl.textContent = `(${remaining} restant${remaining > 1 ? 's' : ''})`;
+    }
+  } else {
+    wrap.style.display = 'none';
+  }
+}
+
+function buildArticleCard(a) {
+  const imgHtml = a.image
+    ? `<img src="${a.image}" alt="${a.title}">`
+    : `<span style="font-size:11px;letter-spacing:1px">📸 Photo à venir</span>`;
+  const hasImg = !!a.image;
+  return `
+  <div class="jpost" onclick="openArticle('${a.id}')">
+    <div class="jpost-img ${hasImg ? 'has-img' : ''}">
+      <span class="jpost-tag">${a.tag}</span>
+      ${imgHtml}
+    </div>
+    <div class="jpost-body">
+      <p class="jpost-date">${fmtMonth(a.date)}</p>
+      <h3 class="jpost-title">${a.title}</h3>
+      <p class="jpost-excerpt">${a.text.substring(0,140)}${a.text.length>140?'…':''}</p>
+      <span class="jpost-more">Lire la suite <span class="jpost-more-arrow">→</span></span>
+    </div>
+  </div>`;
+}
+
+// ─── RENDER EVENTS ───
+function renderEvents() {
+  const raw = localStorage.getItem(KEY_EVENTS);
+  const events = raw ? JSON.parse(raw) : DEFAULT_EVENTS;
+  const grid = document.getElementById('events-grid');
+  if (!events.length) {
+    grid.innerHTML = '<div class="ev-empty">Aucun événement planifié pour le moment.</div>';
+    return;
+  }
+  grid.innerHTML = events.map(e => `
+    <div class="ev-card">
+      <div class="ev-date">${getDay(e.date)}</div>
+      <div class="ev-month">${getMonthShort(e.date)}</div>
+      <div class="ev-name">${e.name}</div>
+      <div class="ev-detail">${e.detail}</div>
+    </div>`).join('');
+}
+
+// ─── OPEN ARTICLE MODAL ───
+function openArticle(id) {
+  const a = allArticles.find(x => x.id === id);
+  if (!a) return;
+  const heroWrap = document.getElementById('modal-hero-wrap');
+  heroWrap.innerHTML = a.image
+    ? `<img class="article-modal-hero" src="${a.image}" alt="${a.title}">`
+    : `<div class="article-modal-hero-placeholder">🌿</div>`;
+  document.getElementById('modal-tag').textContent  = a.tag;
+  document.getElementById('modal-date').textContent = fmtDateLong(a.date);
+  document.getElementById('modal-title').textContent = a.title;
+
+  // ── Rendu enrichi : convertit \n\n en <p> pour une meilleure lisibilité ──
+  const paragraphs = a.text.split(/\n\n+/).filter(p => p.trim());
+  document.getElementById('modal-text').innerHTML = paragraphs
+    .map(p => `<p>${p.replace(/\n/g,'<br>')}</p>`).join('');
+
+  // Temps de lecture estimé
+  const words = a.text.split(/\s+/).length;
+  const mins = Math.max(1, Math.round(words / 200));
+  document.getElementById('modal-reading-time').textContent = `⏱ ${mins} min de lecture`;
+
+  const modal = document.getElementById('article-read-modal');
+  modal.classList.add('open');
+  modal.scrollTop = 0;
+  document.body.style.overflow = 'hidden';
+
+  // Reset progress bar
+  document.getElementById('reading-progress-bar').style.width = '0%';
+}
+
+function closeArticleModal() {
+  document.getElementById('article-read-modal').classList.remove('open');
+  document.getElementById('reading-progress-bar').style.width = '0%';
+  document.body.style.overflow = '';
+}
+
+document.getElementById('article-read-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeArticleModal();
+});
+document.getElementById('article-read-modal').addEventListener('scroll', function() {
+  const el = this;
+  const scrolled = el.scrollTop;
+  const total = el.scrollHeight - el.clientHeight;
+  const pct = total > 0 ? Math.min(100, (scrolled / total) * 100) : 0;
+  document.getElementById('reading-progress-bar').style.width = pct + '%';
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeArticleModal();
+});
+
+// ─── INIT ───
+document.addEventListener('DOMContentLoaded', () => {
+  renderJournal();
+  renderEvents();
+});
+
+// Écoute les changements de storage depuis admin.html
+window.addEventListener('storage', () => {
+  renderJournal();
+  renderEvents();
+});
+</script>
+</body>
+</html>
