@@ -107,9 +107,22 @@ footer{background:#050505;padding:40px 5vw;display:flex;justify-content:space-be
 .wa-float:hover{transform:scale(1.08)}
 .wa-float svg{width:28px;height:28px}
 
+/* HAMBURGER */
+.hamburger{display:none;background:none;border:none;cursor:pointer;padding:6px;flex-direction:column;gap:5px;z-index:101}
+.hamburger span{display:block;width:22px;height:2px;background:var(--gold);border-radius:2px;transition:all .3s}
+.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+
 @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 
 @media(max-width:768px){
+  .hamburger{display:flex}
+  .nav-links{display:none;position:fixed;top:72px;left:0;right:0;bottom:0;background:rgba(10,10,10,1);flex-direction:column;align-items:center;justify-content:center;gap:32px;z-index:99}
+  .nav-links.open{display:flex}
+  .nav-links a{font-size:18px!important;font-weight:400!important}
+  .nav-links li{text-align:center}
+  .nav-cta{font-size:15px!important;margin-top:8px}
   .gal-grid{grid-template-columns:1fr 1fr;padding:0 12px 80px}
   .art-item.large{grid-column:span 2}
   .art-modal-inner{grid-template-columns:1fr}
@@ -117,7 +130,8 @@ footer{background:#050505;padding:40px 5vw;display:flex;justify-content:space-be
   .art-modal-body{padding:28px}
   .modal-specs{grid-template-columns:1fr 1fr}
   footer{flex-direction:column;gap:16px;text-align:center}
-  .nav-links{display:none}
+  .ft-links{display:flex;gap:16px;justify-content:center}
+  .ft-links a{margin-left:0}
 }
 </style>
 </head>
@@ -130,12 +144,15 @@ footer{background:#050505;padding:40px 5vw;display:flex;justify-content:space-be
       <span class="logo-sub">Massages · Art</span>
     </div>
   </a>
-  <ul class="nav-links">
-    <li><a href="index.html" class="nav-back">← Accueil</a></li>
-    <li><a href="galerie.html" class="active">Galerie d'Art</a></li>
-    <li><a href="association.html">Association</a></li>
-    <li><a href="index.html#booking" class="nav-cta">Réserver un massage</a></li>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="index.html" class="nav-back" onclick="closeNav()">← Accueil</a></li>
+    <li><a href="galerie.html" class="active" onclick="closeNav()">Galerie d'Art</a></li>
+    <li><a href="association.html" onclick="closeNav()">Association</a></li>
+    <li><a href="index.html#booking" class="nav-cta" onclick="closeNav()">Réserver un massage</a></li>
   </ul>
+  <button class="hamburger" id="hamburger" onclick="toggleNav()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
 <div class="gal-hero">
@@ -277,6 +294,16 @@ footer{background:#050505;padding:40px 5vw;display:flex;justify-content:space-be
 </a>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// ─── NAV TOGGLE ───
+function toggleNav(){
+  document.getElementById('nav-links').classList.toggle('open');
+  document.getElementById('hamburger').classList.toggle('open');
+}
+function closeNav(){
+  document.getElementById('nav-links').classList.remove('open');
+  document.getElementById('hamburger').classList.remove('open');
+}
+
 const artworks = [
   {num:'01 / 05',title:"L'Élan Turquoise",medium:'Acrylique sur toile · Signée Elsa Pinceau',desc:"Une vague d'énergie bleue et noire traverse la toile comme un souffle de vent tropical. Je capture ici la puissance tranquille de la mer des Caraïbes, entre turbulence et apaisement. Les reflets dorés évoquent le soleil couchant sur Saint-Anne.",dims:'60 × 30 cm',tech:'Acrylique sur toile',price:'380'},
   {num:'02 / 05',title:"Pluie d'Or",medium:'Technique mixte · Signée Elsa Pinceau',desc:"Des coulées de turquoise et d'or tombent comme une pluie tropicale sur un fond de nuit. L'anneau mystérieux ancre la composition dans une méditation sur le cycle — l'eau, la vie, le recommencement.",dims:'40 × 40 cm',tech:'Technique mixte & résine',price:'290'},
