@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin · O'touch Back-office</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --warm: #F5EFE6; --deep: #2C1810; --terracotta: #C4622D; --terra-l: #D4733E;
+  --terra-d: #A0501F; --sage: #4A6741; --sage-l: #5A7A50; --gold: #C9934A;
+  --white: #FFFFFF; --text: #2C2416; --muted: #6B5B4E; --light: #9A8B80;
+  --border: rgba(196,98,45,.15); --sidebar-w: 260px; --bg: #1A0F0A;
+  --panel: #231409; --panel-l: #2E1A10; --panel-ll: #3A2218; --accent: #C4622D;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'DM Sans', sans-serif; font-weight: 300; color: #E8DDD5; background: var(--bg); min-height: 100vh; }
+#login-screen { min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+.login-card { background: var(--panel); border: 1px solid rgba(196,98,45,.2); border-radius: 28px; padding: 50px; width: 400px; text-align: center; }
+.login-logo { font-family: 'Cormorant Garamond', serif; font-size: 30px; color: var(--terracotta); margin-bottom: 20px; }
+.lfield { margin-bottom: 15px; text-align: left; }
+.lfield label { display: block; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: rgba(232,221,213,.4); margin-bottom: 5px; }
+.lfield input { width: 100%; background: var(--panel-l); border: 1px solid rgba(196,98,45,.15); border-radius: 8px; padding: 12px; color: #fff; outline: none; }
+.login-btn { width: 100%; background: var(--terracotta); color: #white; border: none; padding: 14px; border-radius: 10px; cursor: pointer; font-weight: 500; }
+#app { display: none; }
+#app.visible { display: flex; }
+.sidebar { width: var(--sidebar-w); background: var(--panel); border-right: 1px solid rgba(196,98,45,.1); height: 100vh; position: fixed; padding: 30px 20px; }
+.sb-nav { list-style: none; margin-top: 40px; }
+.sb-nav li a { display: block; padding: 12px; color: rgba(232,221,213,.5); text-decoration: none; cursor: pointer; }
+.sb-nav li a.active { color: var(--terracotta); background: rgba(196,98,45,.05); }
+.main-content { margin-left: var(--sidebar-w); flex: 1; padding: 40px; }
+.page-section { display: none; }
+.page-section.active { display: block; }
+.topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+.btn-add { background: var(--terracotta); color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; }
+.modal-ov { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 100; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
+.modal-ov.open { display: flex; }
+.modal-box { background: var(--panel); padding: 40px; border-radius: 20px; width: 500px; position: relative; }
+.field-group { margin-bottom: 20px; }
+.field-lbl { display: block; font-size: 11px; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 8px; }
+.field-input { width: 100%; background: var(--panel-l); border: 1px solid rgba(196,98,45,0.2); border-radius: 8px; padding: 12px; color: white; outline: none; }
+.img-upload-area { border: 2px dashed rgba(196,98,45,0.3); padding: 20px; text-align: center; border-radius: 10px; position: relative; cursor: pointer; }
+.img-upload-area input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+.img-preview { width: 100%; height: 150px; object-fit: cover; margin-top: 10px; display: none; border-radius: 8px; }
+.upload-status { display: none; margin-top: 10px; font-size: 12px; padding: 8px; border-radius: 5px; }
+.upload-status.loading { display: block; color: var(--gold); background: rgba(201,147,74,0.1); }
+.upload-status.success { display: block; color: #7AB870; background: rgba(74,103,65,0.1); }
+.upload-status.error { display: block; color: #E87070; background: rgba(232,80,80,0.1); }
+.btn-remove-img { display: none; background: rgba(232,80,80,0.1); color: #E87070; border: 1px solid rgba(232,80,80,0.2); padding: 8px; border-radius: 5px; cursor: pointer; margin-top: 10px; width: 100%; }
+.btn-remove-img.visible { display: block; }
+.toast { position: fixed; bottom: 20px; right: 20px; background: #222; border: 1px solid var(--terracotta); padding: 15px; border-radius: 8px; display: none; z-index: 1000; }
+</style>
+</head>
+<body>
+
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-logo">O'touch</div>
+    <div class="lfield"><label>Identifiant</label><input type="text" id="login-user"></div>
+    <div class="lfield"><label>Mot de passe</label><input type="password" id="login-pass"></div>
+    <button class="login-btn" onclick="doLogin()">Connexion</button>
+    <p id="login-err" style="color:red; font-size:12px; margin-top:10px;"></p>
+  </div>
+</div>
+
+<div id="app">
+  <aside class="sidebar">
+    <div class="login-logo">O'touch</div>
+    <ul class="sb-nav">
+      <li><a onclick="showSection('dashboard')" class="active" id="nav-dashboard">Tableau de bord</a></li>
+      <li><a onclick="showSection('journal')" id="nav-journal">Journal</a></li>
+    </ul>
+    <button onclick="doLogout()" style="margin-top:20px; background:none; border:1px solid #444; color:#888; padding:5px 10px; cursor:pointer;">Déconnexion</button>
+  </aside>
+
+  <main class="main-content">
+    <section class="page-section active" id="section-dashboard">
+      <div class="topbar"><h1>Tableau de bord</h1></div>
+      <p>Bienvenue dans votre gestion.</p>
+    </section>
+
+    <section class="page-section" id="section-journal">
+      <div class="topbar">
+        <h1>Journal</h1>
+        <button class="btn-add" onclick="openArticleModal()">+ Nouvel article</button>
+      </div>
+      <div id="articles-list"></div>
+    </section>
+  </main>
+</div>
+
+<div class="modal-ov" id="article-modal">
+  <div class="modal-box">
+    <h2 style="margin-bottom:20px;">Nouvel Article</h2>
+    <div class="field-group">
+      <span class="field-lbl">Titre</span>
+      <input type="text" class="field-input" id="art-title">
+    </div>
+    <div class="field-group">
+      <span class="field-lbl">Contenu</span>
+      <textarea class="field-input" id="art-text" style="height:100px;"></textarea>
+    </div>
+    <div class="field-group">
+      <span class="field-lbl">Image</span>
+      <div class="img-upload-area">
+        <input type="file" id="art-file" accept="image/*" onchange="handleFileSelect()">
+        <p id="art-upload-placeholder">Cliquez ou glissez une image</p>
+        <img id="art-img-preview" class="img-preview">
+      </div>
+      <div id="art-upload-status" class="upload-status"></div>
+      <button id="art-remove-btn" class="btn-remove-img" onclick="removeImage()">Supprimer l'image</button>
+    </div>
+    <button class="login-btn" onclick="saveArticle()">Enregistrer l'article</button>
+    <button onclick="closeModal()" style="background:none; border:none; color:#888; margin-top:10px; cursor:pointer; width:100%;">Annuler</button>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+let currentImageUrl = "";
+let articles = JSON.parse(localStorage.getItem('otouch_articles') || '[]');
+
+function doLogin() {
+  const u = document.getElementById('login-user').value;
+  const p = document.getElementById('login-pass').value;
+  if(u === 'elsa' && p === 'otouch2025') {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('app').classList.add('visible');
+    renderArticles();
+  } else {
+    document.getElementById('login-err').innerText = "Erreur d'identifiants";
+  }
+}
+
+function doLogout() { location.reload(); }
+
+function showSection(id) {
+  document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('section-' + id).classList.add('active');
+}
+
+function openArticleModal() {
+  document.getElementById('article-modal').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('article-modal').classList.remove('open');
+}
+
+async function handleFileSelect() {
+  const file = document.getElementById('art-file').files[0];
+  if(!file) return;
+
+  const status = document.getElementById('art-upload-status');
+  status.innerText = "Téléchargement...";
+  status.className = "upload-status loading";
+
+  try {
+    const res = await fetch('/api/upload', {
+      method: 'POST',
+      headers: {
+        'x-filename': encodeURIComponent(file.name),
+        'content-type-file': file.type
+        // Note: Pas de Content-Type ici pour éviter le bug serveur
+      },
+      body: file
+    });
+
+    if(!res.ok) throw new Error('Erreur serveur');
+
+    const data = await res.json();
+    currentImageUrl = data.url;
+
+    document.getElementById('art-img-preview').src = data.url;
+    document.getElementById('art-img-preview').style.display = 'block';
+    document.getElementById('art-upload-placeholder').style.display = 'none';
+    document.getElementById('art-remove-btn').classList.add('visible');
+    
+    status.innerText = "Succès !";
+    status.className = "upload-status success";
+  } catch(e) {
+    status.innerText = "Erreur : " + e.message;
+    status.className = "upload-status error";
+  }
+}
+
+async function removeImage() {
+  if(!currentImageUrl) return;
+  try {
+    await fetch('/api/delete', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url: currentImageUrl })
+    });
+    currentImageUrl = "";
+    document.getElementById('art-img-preview').style.display = 'none';
+    document.getElementById('art-upload-placeholder').style.display = 'block';
+    document.getElementById('art-remove-btn').classList.remove('visible');
+    document.getElementById('art-upload-status').innerText = "Image supprimée";
+  } catch(e) {
+    alert("Erreur suppression");
+  }
+}
+
+function saveArticle() {
+  const t = document.getElementById('art-title').value;
+  const txt = document.getElementById('art-text').value;
+  if(!t) return alert("Titre requis");
+  articles.unshift({ title: t, text: txt, image: currentImageUrl });
+  localStorage.setItem('otouch_articles', JSON.stringify(articles));
+  renderArticles();
+  closeModal();
+  showToast("Article enregistré !");
+}
+
+function renderArticles() {
+  const list = document.getElementById('articles-list');
+  list.innerHTML = articles.map(a => `
+    <div style="background:#222; padding:20px; border-radius:10px; margin-bottom:10px;">
+      ${a.image ? `<img src="${a.image}" style="width:50px; height:50px; object-fit:cover; float:left; margin-right:15px; border-radius:5px;">` : ''}
+      <h3 style="color:var(--terracotta)">${a.title}</h3>
+      <p style="font-size:13px; color:#888;">${a.text}</p>
+      <div style="clear:both;"></div>
+    </div>
+  `).join('');
+}
+
+function showToast(m) {
+  const t = document.getElementById('toast');
+  t.innerText = m;
+  t.style.display = 'block';
+  setTimeout(() => t.style.display = 'none', 3000);
+}
+</script>
+</body>
+</html>
